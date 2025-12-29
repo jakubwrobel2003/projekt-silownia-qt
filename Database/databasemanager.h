@@ -6,6 +6,8 @@
 class DatabaseManager {
 public:
     static bool connect();
+    static QSqlDatabase database();
+    static void initDatabase();
 };
 
 #endif

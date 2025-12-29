@@ -10,11 +10,46 @@ CONFIG += c++17
 
 SOURCES += \
     Database/databasemanager.cpp \
+    Model/cardioexercise.cpp \
+    Model/exercise.cpp \
+    Model/exerciseresult.cpp \
+    Model/strengthexercise.cpp \
+    Model/trainingmanager.cpp \
+    Model/usermodel.cpp \
+    Model/workout.cpp \
+    Model/workoutsession.cpp \
+    Repository/exercisedefinitionrepository.cpp \
+    Repository/exercisehistoryrepository.cpp \
+    Repository/exerciserepository.cpp \
+    Repository/exerciseresultrepository.cpp \
+    Repository/historyrepository.cpp \
+    Repository/userrepository.cpp \
+    Repository/workoutrepository.cpp \
+    Repository/workoutsessionrepository.cpp \
+    Utils/passwordhasher.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     Database/databasemanager.h \
+    Model/ExerciseHistoryItem.h \
+    Model/cardioexercise.h \
+    Model/exercise.h \
+    Model/exerciseresult.h \
+    Model/strengthexercise.h \
+    Model/trainingmanager.h \
+    Model/usermodel.h \
+    Model/workout.h \
+    Model/workoutsession.h \
+    Repository/exercisedefinitionrepository.h \
+    Repository/exercisehistoryrepository.h \
+    Repository/exerciserepository.h \
+    Repository/exerciseresultrepository.h \
+    Repository/historyrepository.h \
+    Repository/userrepository.h \
+    Repository/workoutrepository.h \
+    Repository/workoutsessionrepository.h \
+    Utils/passwordhasher.h \
     mainwindow.h
 
 FORMS += \

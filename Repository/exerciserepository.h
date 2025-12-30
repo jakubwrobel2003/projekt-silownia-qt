@@ -12,6 +12,9 @@ public:
 
     // pobranie wszystkich ćwiczeń dla danego treningu
     static std::vector<Exercise> getForWorkout(int workoutId);
+
+    static bool createFromDefinition(int workoutId, int exerciseDefinitionId);
+
 };
 
 #endif // EXERCISEREPOSITORY_H

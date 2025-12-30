@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,6 +9,8 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AI/aiworkoutgenerator.cpp \
+    AI/geminiservice.cpp \
     Database/databasemanager.cpp \
     Model/cardioexercise.cpp \
     Model/exercise.cpp \
@@ -27,10 +29,17 @@ SOURCES += \
     Repository/workoutrepository.cpp \
     Repository/workoutsessionrepository.cpp \
     Utils/passwordhasher.cpp \
+    dashboardview.cpp \
+    historyview.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    profileview.cpp \
+    workoutsview.cpp
 
 HEADERS += \
+    AI/aiworkoutgenerator.h \
+    AI/aiworkoutplan.h \
+    AI/geminiservice.h \
     Database/databasemanager.h \
     Model/ExerciseHistoryItem.h \
     Model/cardioexercise.h \
@@ -50,10 +59,18 @@ HEADERS += \
     Repository/workoutrepository.h \
     Repository/workoutsessionrepository.h \
     Utils/passwordhasher.h \
-    mainwindow.h
+    dashboardview.h \
+    historyview.h \
+    mainwindow.h \
+    profileview.h \
+    workoutsview.h
 
 FORMS += \
-    mainwindow.ui
+    dashboardview.ui \
+    historyview.ui \
+    mainwindow.ui \
+    profileview.ui \
+    workoutsview.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

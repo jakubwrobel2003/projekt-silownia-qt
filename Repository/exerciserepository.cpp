@@ -38,3 +38,16 @@ std::vector<Exercise> ExerciseRepository::getForWorkout(int workoutId) {
 
     return result;
 }
+bool ExerciseRepository::createFromDefinition(
+    int workoutId,
+    int exerciseDefinitionId)
+{
+    QSqlQuery q;
+    q.prepare(
+        "INSERT INTO exercises (workout_id, name, type) "
+        "SELECT ?, name, type FROM exercise_definitions WHERE id = ?"
+        );
+    q.addBindValue(workoutId);
+    q.addBindValue(exerciseDefinitionId);
+    return q.exec();
+}

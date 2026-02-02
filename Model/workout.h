@@ -4,24 +4,22 @@
 #include <QString>
 #include <vector>
 #include <memory>
-#include "Exercise.h"
+#include "exercise.h"
 
-class Workout {
+class Workout
+{
 public:
-    Workout();
-    Workout(int id, const QString& name);
-
-    int getId() const;
-    QString getName() const;
-    const std::vector<std::shared_ptr<Exercise>>& getExercises() const;
-
-    void setId(int id);
     void setName(const QString& name);
 
-    void addExercise(const std::shared_ptr<Exercise>& exercise);
+    void addExercise(std::shared_ptr<Exercise> exercise);
+    void removeExercise(int index);
 
+    std::shared_ptr<Exercise> getExercise(int index) const;
+    void updateExercise(int index, std::shared_ptr<Exercise> exercise);
+
+    int getExerciseCount() const;
+    void clearExercises();
 private:
-    int id;
     QString name;
     std::vector<std::shared_ptr<Exercise>> exercises;
 };

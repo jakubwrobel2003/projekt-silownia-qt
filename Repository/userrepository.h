@@ -8,6 +8,6 @@ class UserRepository {
 public:
     static bool createUser(const UserModel& user);
     static std::optional<UserModel> getByLogin(const QString& login);
-    static bool loginValid(const QString& login, const QString& passwordHash);
+    UserModel* loginValid(const QString& login, const QString& passwordHash);
 };
 #endif // USERREPOSITORY_H

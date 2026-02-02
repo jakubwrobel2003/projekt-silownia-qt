@@ -1,91 +1,118 @@
 #include "trainingmanager.h"
 
-#include "Repository/workoutsessionrepository.h"
-#include "Repository/exerciseresultrepository.h"
-
-#include <QDate>
+#include <QSqlQuery>
+#include <QSqlError>
 #include <QDebug>
 
-TrainingManager::TrainingManager()
-    : currentSessionId(-1)
+// ===============================
+// KONSTRUKTOR
+// ===============================
+TrainingManager::TrainingManager(DatabaseManager& db)
+    : db(db)
 {
 }
 
-/**
- * Rozpoczęcie nowego treningu (tworzy rekord workout_sessions)
- */
-void TrainingManager::startWorkout(int userId, int workoutId)
+// ===============================
+// POBIERANIE ĆWICZEŃ Z BAZY (PO TYPIE)
+// ===============================
+QStringList TrainingManager::getExerciseNamesByType(const QString& type)
 {
-    currentSessionId = WorkoutSessionRepository::startSession(
-        userId,
-        workoutId,
-        QDate::currentDate().toString(Qt::ISODate)
+    QStringList list;
+    QSqlQuery q(db.database());
+
+    q.prepare(
+        "SELECT name FROM exercise_definitions "
+        "WHERE type = :type "
+        "ORDER BY name"
         );
+    q.bindValue(":type", type);
 
-    qDebug() << "Workout started, sessionId =" << currentSessionId;
-}
-
-/**
- * Zakończenie treningu
- */
-void TrainingManager::finishWorkout()
-{
-    qDebug() << "Workout finished, sessionId =" << currentSessionId;
-    currentSessionId = -1;
-}
-
-/**
- * Zapis ćwiczenia siłowego
- */
-void TrainingManager::saveStrengthExercise(
-    int exerciseId,
-    double weight,
-    int reps,
-    int difficulty
-    ) {
-    if (currentSessionId < 0) {
-        qDebug() << "No active workout session!";
-        return;
+    if (!q.exec())
+    {
+        qWarning() << "getExerciseNamesByType error:" << q.lastError();
+        return list;
     }
 
-    int resultId = ExerciseResultRepository::createBaseResult(
-        currentSessionId,
-        exerciseId,
-        difficulty
-        );
+    while (q.next())
+        list << q.value(0).toString();
 
-    ExerciseResultRepository::saveStrengthResult(
-        resultId,
-        weight,
-        reps
-        );
-
-    qDebug() << "Strength exercise saved, resultId =" << resultId;
+    return list;
 }
 
-/**
- * Zapis ćwiczenia cardio
- */
-void TrainingManager::saveCardioExercise(
-    int exerciseId,
-    double distance,
-    int difficulty
-    ) {
-    if (currentSessionId < 0) {
-        qDebug() << "No active workout session!";
-        return;
+// ===============================
+// POBIERANIE ID ĆWICZENIA (DEF)
+// ===============================
+int TrainingManager::getExerciseDefinitionId(const QString& name)
+{
+    QSqlQuery q(db.database());
+
+    q.prepare(
+        "SELECT id FROM exercise_definitions WHERE name = :name"
+        );
+    q.bindValue(":name", name);
+
+    if (!q.exec() || !q.next())
+    {
+        qWarning() << "getExerciseDefinitionId error for:" << name;
+        return -1;
     }
 
-    int resultId = ExerciseResultRepository::createBaseResult(
-        currentSessionId,
-        exerciseId,
-        difficulty
-        );
+    return q.value(0).toInt();
+}
 
-    ExerciseResultRepository::saveCardioResult(
-        resultId,
-        distance
-        );
+// ===============================
+// ZAPIS TRENINGU + PLANU
+// ===============================
+bool TrainingManager::saveWorkoutWithPlan(
+    const QString& workoutName,
+    const QList<WorkoutExercisePlan>& plan)
+{
+    QSqlQuery q(db.database());
 
-    qDebug() << "Cardio exercise saved, resultId =" << resultId;
+    // ===============================
+    // 1️⃣ ZAPIS TRENINGU
+    // ===============================
+    q.prepare(
+        "INSERT INTO workouts (name) VALUES (:name)"
+        );
+    q.bindValue(":name", workoutName);
+
+    if (!q.exec())
+    {
+        qCritical() << "Workout insert error:" << q.lastError();
+        return false;
+    }
+
+    int workoutId = q.lastInsertId().toInt();
+
+    // ===============================
+    // 2️⃣ ZAPIS PLANU TRENINGU
+    // ===============================
+    for (const auto& ex : plan)
+    {
+        q.prepare(
+            "INSERT INTO workout_exercise_plan "
+            "(workout_id, exercise_def_id, type, sets, reps, weight, duration, distance) "
+            "VALUES "
+            "(:workoutId, :defId, :type, :sets, :reps, :weight, :duration, :distance)"
+            );
+
+        q.bindValue(":workoutId", workoutId);
+        q.bindValue(":defId", ex.exerciseDefId);
+        q.bindValue(":type", ex.type);
+        q.bindValue(":sets", ex.sets);
+        q.bindValue(":reps", ex.reps);
+        q.bindValue(":weight", ex.weight);
+        q.bindValue(":duration", ex.duration);
+        q.bindValue(":distance", ex.distance);
+
+        if (!q.exec())
+        {
+            qCritical() << "Workout plan insert error:" << q.lastError();
+            return false;
+        }
+    }
+
+    qDebug() << "Workout + plan saved successfully";
+    return true;
 }

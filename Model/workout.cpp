@@ -1,31 +1,44 @@
-#include "Workout.h"
+#include "workout.h"
 
-Workout::Workout()
-    : id(-1) {}
-
-Workout::Workout(int id, const QString& name)
-    : id(id), name(name) {}
-
-int Workout::getId() const {
-    return id;
+void Workout::setName(const QString &name)
+{
+    this->name = name;
 }
 
-QString Workout::getName() const {
-    return name;
-}
-
-const std::vector<std::shared_ptr<Exercise>>& Workout::getExercises() const {
-    return exercises;
-}
-
-void Workout::setId(int newId) {
-    id = newId;
-}
-
-void Workout::setName(const QString& newName) {
-    name = newName;
-}
-
-void Workout::addExercise(const std::shared_ptr<Exercise>& exercise) {
+void Workout::addExercise(std::shared_ptr<Exercise> exercise)
+{
     exercises.push_back(exercise);
+}
+
+void Workout::removeExercise(int index)
+{
+    if (index < 0 || index >= static_cast<int>(exercises.size()))
+        return;
+
+    exercises.erase(exercises.begin() + index);
+}
+
+std::shared_ptr<Exercise> Workout::getExercise(int index) const
+{
+    if (index < 0 || index >= static_cast<int>(exercises.size()))
+        return nullptr;
+
+    return exercises[index];
+}
+
+void Workout::updateExercise(int index, std::shared_ptr<Exercise> exercise)
+{
+    if (index < 0 || index >= static_cast<int>(exercises.size()))
+        return;
+
+    exercises[index] = exercise;
+}
+
+int Workout::getExerciseCount() const
+{
+    return static_cast<int>(exercises.size());
+}
+void Workout::clearExercises()
+{
+    exercises.clear();
 }

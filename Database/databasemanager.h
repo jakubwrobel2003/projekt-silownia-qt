@@ -3,11 +3,20 @@
 
 #include <QSqlDatabase>
 
-class DatabaseManager {
+class DatabaseManager
+{
 public:
-    static bool connect();
-    static QSqlDatabase database();
-    static void initDatabase();
+    static DatabaseManager& instance();
+
+    QSqlDatabase database();
+    bool connect();
+
+private:
+    DatabaseManager() = default;
+    DatabaseManager(const DatabaseManager&) = delete;
+    DatabaseManager& operator=(const DatabaseManager&) = delete;
+
+    void initDatabase();
 };
 
-#endif
+#endif // DATABASEMANAGER_H

@@ -1,14 +1,27 @@
 #ifndef CARDIOEXERCISE_H
 #define CARDIOEXERCISE_H
 
-#include "Exercise.h"
+#include "exercise.h"
 
-class CardioExercise : public Exercise {
+class CardioExercise : public Exercise
+{
 public:
     CardioExercise();
-    CardioExercise(int id, int workoutId, const QString& name);
+    CardioExercise(const QString& name,
+                   int durationMinutes,
+                   double distanceKm);
 
-    // domyślny typ = Cardio
+    // GETTERY
+    int getDuration() const;
+    double getDistance() const;
+
+    // SETTERY
+    void setDuration(int minutes);
+    void setDistance(double km);
+
+private:
+    int durationMinutes;
+    double distanceKm;
 };
 
 #endif // CARDIOEXERCISE_H

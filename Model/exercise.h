@@ -3,12 +3,14 @@
 
 #include <QString>
 
-enum class ExerciseType {
+enum class ExerciseType
+{
     Strength,
     Cardio
 };
 
-class Exercise {
+class Exercise
+{
 public:
     Exercise();
     Exercise(int id, int workoutId, const QString& name, ExerciseType type);
@@ -19,12 +21,12 @@ public:
     QString getName() const;
     ExerciseType getType() const;
 
-    void setId(int id);
-    void setWorkoutId(int workoutId);
-    void setName(const QString& name);
+    void setId(int newId);
+    void setWorkoutId(int newWorkoutId);
+    void setName(const QString& newName);
 
-    static QString typeToString(ExerciseType type);
-    static ExerciseType stringToType(const QString& type);
+    static QString typeToString(ExerciseType t);
+    static ExerciseType stringToType(const QString& s);
 
 protected:
     int id;
@@ -32,5 +34,6 @@ protected:
     QString name;
     ExerciseType type;
 };
+
 
 #endif // EXERCISE_H

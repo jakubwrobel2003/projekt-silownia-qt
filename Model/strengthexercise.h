@@ -1,14 +1,31 @@
 #ifndef STRENGTHEXERCISE_H
 #define STRENGTHEXERCISE_H
 
-#include "Exercise.h"
+#include "exercise.h"
 
-class StrengthExercise : public Exercise {
+class StrengthExercise : public Exercise
+{
 public:
     StrengthExercise();
-    StrengthExercise(int id, int workoutId, const QString& name);
+    StrengthExercise(const QString& name,
+                     int sets,
+                     int reps,
+                     double weight);
 
-    // domyślny typ = Strength
+    // GETTERY
+    int getSets() const;
+    int getReps() const;
+    double getWeight() const;
+
+    // SETTERY (przy edycji)
+    void setSets(int sets);
+    void setReps(int reps);
+    void setWeight(double weight);
+
+private:
+    int sets;
+    int reps;
+    double weight;
 };
 
 #endif // STRENGTHEXERCISE_H

@@ -12,3 +12,7 @@ HistoryView::~HistoryView()
 {
     delete ui;
 }
+void HistoryView::setUserData(UserModel* currentUser){
+    this->currentUser=currentUser;
+}
+

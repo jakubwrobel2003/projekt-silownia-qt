@@ -1,104 +1,89 @@
-#include "AIWorkoutGenerator.h"
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
+#include "aiworkoutgenerator.h"
 
 AIWorkoutGenerator::AIWorkoutGenerator(QObject* parent)
     : QObject(parent), gemini(this)
 {
-    connect(&gemini, &GeminiService::success, this,
-            [this](const QString& text) {
-                AIWorkoutPlan plan;
-                QString err;
-                if (!parseResponse(text, plan, err)) {
-                    emit error(err);
-                    return;
-                }
-                emit planReady(plan);
-            });
+    connect(&gemini, &GeminiService::success,
+            this, &AIWorkoutGenerator::onGeminiSuccess);
 
     connect(&gemini, &GeminiService::error,
-            this, &AIWorkoutGenerator::error);
+            this, &AIWorkoutGenerator::onGeminiError);
 }
 
-void AIWorkoutGenerator::generateFBW()
+void AIWorkoutGenerator::generateFBW(const QStringList& allowedExercises)
 {
-    gemini.generate(buildPrompt());
+    QString exerciseList = allowedExercises.join(", ");
+
+    QString prompt =
+        "Generate a FULL BODY WORKOUT.\n"
+        "You MUST use ONLY exercises from this list:\n"
+        + exerciseList + "\n\n"
+                         "DO NOT invent new exercises.\n"
+                         "Return plain text, one exercise per line.\n\n"
+                         "FORMAT:\n"
+                         "Strength: Name; sets; reps; weight\n"
+                         "Cardio: Name; duration(min); distance(km)\n\n"
+                         "Example:\n"
+                         "Strength: Bench Press; 4; 8; 60\n"
+                         "Cardio: Treadmill Run; 20; 3\n";
+
+    gemini.generate(prompt);
 }
 
-QString AIWorkoutGenerator::buildPrompt() const
+void AIWorkoutGenerator::onGeminiSuccess(const QString& text)
 {
-    return
-        "Generate FULL BODY WORKOUT (FBW).\n"
-        "Use ONLY these exercise IDs:\n"
-        "1 Bench Press\n"
-        "2 Squat\n"
-        "3 Deadlift\n"
-        "4 Lat Pulldown\n"
-        "5 Shoulder Press\n"
-        "6 Biceps Curl\n"
-        "7 Triceps Pushdown\n"
-        "8 Plank\n"
-        "\n"
-        "Rules:\n"
-        "- exactly 6 exercises\n"
-        "- output JSON ONLY\n"
-        "- format:\n"
-        "{\n"
-        "  \"workout_name\": \"FBW - AI\",\n"
-        "  \"exercises\": [\n"
-        "    {\"exercise_definition_id\":1,\"sets\":3,\"reps\":\"8-10\"}\n"
-        "  ]\n"
-        "}";
-}
+    AIWorkoutPlan plan;
+    plan.name = "AI FBW";
 
-static QString extractJson(const QString& text)
-{
-    int a = text.indexOf('{');
-    int b = text.lastIndexOf('}');
-    if (a < 0 || b < 0 || b <= a) return {};
-    return text.mid(a, b - a + 1);
-}
+    QStringList lines = text.split('\n', Qt::SkipEmptyParts);
 
-bool AIWorkoutGenerator::parseResponse(
-    const QString& text,
-    AIWorkoutPlan& plan,
-    QString& err)
-{
-    QString jsonText = extractJson(text);
-    if (jsonText.isEmpty()) {
-        err = "Brak JSON w odpowiedzi AI";
-        return false;
-    }
+    for (const QString& line : lines)
+    {
+        QString l = line.trimmed();
 
-    QJsonDocument doc = QJsonDocument::fromJson(jsonText.toUtf8());
-    if (!doc.isObject()) {
-        err = "Niepoprawny JSON";
-        return false;
-    }
+        if (l.startsWith("Strength:", Qt::CaseInsensitive))
+        {
+            QString data = l.mid(QString("Strength:").length()).trimmed();
+            QStringList parts = data.split(';');
 
-    QJsonObject root = doc.object();
-    plan.workoutName = root.value("workout_name").toString("FBW - AI");
+            if (parts.size() < 4) continue;
 
-    QJsonArray arr = root.value("exercises").toArray();
-    if (arr.size() != 6) {
-        err = "AI zwróciło złą liczbę ćwiczeń";
-        return false;
-    }
+            AIExercise ex;
+            ex.type = "strength";
+            ex.name = parts[0].trimmed();
+            ex.sets = parts[1].toInt();
+            ex.reps = parts[2].toInt();
+            ex.weight = parts[3].toDouble();
 
-    plan.exercises.clear();
-    for (auto v : arr) {
-        QJsonObject o = v.toObject();
-        AIWorkoutExercise e;
-        e.exerciseDefinitionId = o.value("exercise_definition_id").toInt();
-        e.sets = o.value("sets").toInt();
-        e.reps = o.value("reps").toString();
-
-        if (e.exerciseDefinitionId <= 0 || e.sets <= 0 || e.reps.isEmpty()) {
-            err = "Niepoprawne dane ćwiczenia";
-            return false;
+            plan.exercises.append(ex);
         }
-        plan.exercises.append(e);
+        else if (l.startsWith("Cardio:", Qt::CaseInsensitive))
+        {
+            QString data = l.mid(QString("Cardio:").length()).trimmed();
+            QStringList parts = data.split(';');
+
+            if (parts.size() < 3) continue;
+
+            AIExercise ex;
+            ex.type = "cardio";
+            ex.name = parts[0].trimmed();
+            ex.duration = parts[1].toInt();
+            ex.distance = parts[2].toDouble();
+
+            plan.exercises.append(ex);
+        }
     }
-    return true;
+
+    if (plan.exercises.isEmpty())
+    {
+        emit error("AI nie zwróciło poprawnego planu");
+        return;
+    }
+
+    emit planReady(plan);
+}
+
+void AIWorkoutGenerator::onGeminiError(const QString& message)
+{
+    emit error(message);
 }

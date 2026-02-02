@@ -6,25 +6,152 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>594</width>
+    <height>398</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>30</y>
-     <width>49</width>
-     <height>16</height>
+     <x>-1</x>
+     <y>-1</y>
+     <width>621</width>
+     <height>381</height>
     </rect>
    </property>
-   <property name="text">
-    <string>workout</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <widget class="QWidget" name="verticalLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>161</width>
+         <height>251</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Ćwiczenia w treningu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="addedExercisesList"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Nazwa treningu</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="workoutNameLineEdit"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="saveWorkoutButton">
+          <property name="text">
+           <string>Zapisz trening</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="widget_2" native="true">
+      <widget class="QWidget" name="verticalLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>168</width>
+         <height>340</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QComboBox" name="exerciseTypeComboBox"/>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="distanceSpinBox"/>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="durationSpinBox"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>Ćwiczenie</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="exerciseComboBox"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Serie</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="setsSpinBox"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Powtórzenia</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="repsSpinBox"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Ciężar (kg)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="weightSpinBox"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addExerciseButton">
+          <property name="text">
+           <string>Dodaj ćwiczenie</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="generateAiWorkoutButton">
+          <property name="text">
+           <string>Generuj trening AI</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

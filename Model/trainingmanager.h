@@ -1,18 +1,46 @@
 #ifndef TRAININGMANAGER_H
 #define TRAININGMANAGER_H
 
-class TrainingManager {
+#include <QStringList>
+#include <QList>
+
+#include "./Database/DatabaseManager.h"
+
+// ===============================
+// STRUKTURA PLANU TRENINGU
+// ===============================
+struct WorkoutExercisePlan
+{
+    int exerciseDefId;     // id z exercise_definitions
+    QString type;          // "strength" / "cardio"
+
+    // strength
+    int sets = 0;
+    int reps = 0;
+    double weight = 0.0;
+
+    // cardio
+    int duration = 0;
+    double distance = 0.0;
+};
+
+class TrainingManager
+{
 public:
-    TrainingManager();
+    explicit TrainingManager(DatabaseManager& db);
 
-    void startWorkout(int userId, int workoutId);
-    void finishWorkout();
+    // ===== LISTA ĆWICZEŃ =====
+    QStringList getExerciseNamesByType(const QString& type);
+    int getExerciseDefinitionId(const QString& name);
 
-    void saveStrengthExercise(int exerciseId, double weight, int reps, int difficulty);
-    void saveCardioExercise(int exerciseId, double distance, int difficulty);
+    // ===== ZAPIS TRENINGU =====
+    bool saveWorkoutWithPlan(
+        const QString& workoutName,
+        const QList<WorkoutExercisePlan>& plan
+        );
 
 private:
-    int currentSessionId;
+    DatabaseManager& db;
 };
 
 #endif // TRAININGMANAGER_H

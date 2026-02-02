@@ -1,4 +1,4 @@
-QT       += core gui sql network
+QT       += core gui sql network charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,9 +31,11 @@ SOURCES += \
     Utils/passwordhasher.cpp \
     dashboardview.cpp \
     historyview.cpp \
+    loginview.cpp \
     main.cpp \
     mainwindow.cpp \
     profileview.cpp \
+    trainingview.cpp \
     workoutsview.cpp
 
 HEADERS += \
@@ -61,15 +63,19 @@ HEADERS += \
     Utils/passwordhasher.h \
     dashboardview.h \
     historyview.h \
+    loginview.h \
     mainwindow.h \
     profileview.h \
+    trainingview.h \
     workoutsview.h
 
 FORMS += \
     dashboardview.ui \
     historyview.ui \
+    loginview.ui \
     mainwindow.ui \
     profileview.ui \
+    trainingview.ui \
     workoutsview.ui
 
 # Default rules for deployment.

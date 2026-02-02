@@ -4,15 +4,31 @@
 #include <QString>
 #include <QList>
 
-struct AIWorkoutExercise {
-    int exerciseDefinitionId;   // FK -> exercise_definitions.id
-    int sets;
-    QString reps;
+// ===============================
+// JEDNO ĆWICZENIE Z AI
+// ===============================
+struct AIExercise
+{
+    QString name;      // musi istnieć w exercise_definitions
+    QString type;      // "strength" / "cardio"
+
+    // strength
+    int sets = 0;
+    int reps = 0;
+    double weight = 0.0;
+
+    // cardio
+    int duration = 0;
+    double distance = 0.0;
 };
 
-struct AIWorkoutPlan {
-    QString workoutName;                // -> workouts.name
-    QList<AIWorkoutExercise> exercises; // -> exercises
+// ===============================
+// PLAN TRENINGU Z AI
+// ===============================
+struct AIWorkoutPlan
+{
+    QString name;                  // nazwa treningu
+    QList<AIExercise> exercises;   // LISTA ĆWICZEŃ
 };
 
 #endif // AIWORKOUTPLAN_H

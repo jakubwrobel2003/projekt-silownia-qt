@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>803</width>
-    <height>581</height>
+    <width>810</width>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,37 +55,51 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
+          <widget class="QPushButton" name="btnLogin">
+           <property name="text">
+            <string>Loguj</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnWorkouts">
            <property name="text">
-            <string>PushButton</string>
+            <string>Workouts</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnExit">
            <property name="text">
-            <string>PushButton</string>
+            <string>Exit</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnProfile">
            <property name="text">
-            <string>PushButton</string>
+            <string>Profil</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnDashboard">
            <property name="text">
-            <string>PushButton</string>
+            <string>Dashboard</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnTraining">
+           <property name="text">
+            <string>Trainin</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnHistory">
            <property name="text">
-            <string>PushButton</string>
+            <string>History</string>
            </property>
           </widget>
          </item>
@@ -97,7 +111,9 @@
       <widget class="QStackedWidget" name="stackedWidget">
        <widget class="QWidget" name="pageHistory"/>
        <widget class="QWidget" name="pageDashboard"/>
+       <widget class="QWidget" name="pageLogin"/>
        <widget class="QWidget" name="page_4"/>
+       <widget class="QWidget" name="pageTraining"/>
        <widget class="QWidget" name="pageWorkouts"/>
       </widget>
      </item>
@@ -109,7 +125,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>803</width>
+     <width>810</width>
      <height>22</height>
     </rect>
    </property>

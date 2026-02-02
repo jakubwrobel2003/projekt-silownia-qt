@@ -2,25 +2,27 @@
 #define AIWORKOUTGENERATOR_H
 
 #include <QObject>
-#include "AIWorkoutPlan.h"
+#include "aiworkoutplan.h"
 #include "GeminiService.h"
 
-class AIWorkoutGenerator : public QObject {
+class AIWorkoutGenerator : public QObject
+{
     Q_OBJECT
 public:
     explicit AIWorkoutGenerator(QObject* parent = nullptr);
 
-    void generateFBW();
+   void generateFBW(const QStringList& allowedExercises); // uruchamia Gemini
 
 signals:
     void planReady(const AIWorkoutPlan& plan);
     void error(const QString& message);
 
-private:
-    QString buildPrompt() const;
-    bool parseResponse(const QString& text, AIWorkoutPlan& plan, QString& err);
+private slots:
+    void onGeminiSuccess(const QString& text);
+    void onGeminiError(const QString& message);
 
+private:
     GeminiService gemini;
 };
 
-#endif // AIWORKOUTGENERATOR_H
+#endif

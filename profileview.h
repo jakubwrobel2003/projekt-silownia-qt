@@ -1,7 +1,7 @@
 #ifndef PROFILEVIEW_H
 #define PROFILEVIEW_H
-#include "./Model/usermodel.h"
 #include <QWidget>
+#include "./Model/usermodel.h"
 
 namespace Ui {
 class ProfileView;
@@ -15,10 +15,11 @@ public:
     explicit ProfileView(QWidget *parent = nullptr);
     ~ProfileView();
 
-    void setUserData(UserModel* currentUser);
+    void setUserData(UserModel *currentUser);
+
 private:
     Ui::ProfileView *ui;
-    UserModel* currentUser=nullptr;
+    UserModel *currentUser = nullptr;
 };
 
 #endif // PROFILEVIEW_H

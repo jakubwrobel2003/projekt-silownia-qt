@@ -1,7 +1,7 @@
 #ifndef LOGINVIEW_H
 #define LOGINVIEW_H
-#include "./Repository/userrepository.h"
 #include <QWidget>
+#include "./Repository/userrepository.h"
 
 namespace Ui {
 class LoginView;
@@ -16,14 +16,14 @@ public:
     ~LoginView();
 
 signals:
-    void loginSuccessful(UserModel* user); // Sygnał po udanym logowaniu
+    void loginSuccessful(UserModel *user); // Sygnał po udanym logowaniu
 
 private slots:
-   void onLoginButtonClicked();
+    void onLoginButtonClicked();
 
 private:
-    UserModel* user = nullptr;
-    Ui::LoginView *ui;  // Wskaźnik do UI
+    UserModel *user = nullptr;
+    Ui::LoginView *ui; // Wskaźnik do UI
     UserRepository *userRepository;
 };
 

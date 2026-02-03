@@ -1,22 +1,25 @@
 #ifndef DASHBOARDVIEW_H
 #define DASHBOARDVIEW_H
 
-#include <QWidget>
-#include <QDate>
-#include "./Model/usermodel.h"
-#include <QtCharts>
 #include <QChartView>
+#include <QDate>
 #include <QLineSeries>
+#include <QWidget>
+#include <QtCharts>
+#include "./Model/usermodel.h"
 void setupChart();
-namespace Ui { class DashboardView; }
+namespace Ui {
+class DashboardView;
+}
 
-class DashboardView : public QWidget {
+class DashboardView : public QWidget
+{
     Q_OBJECT
 
 public:
     explicit DashboardView(QWidget *parent = nullptr);
     ~DashboardView();
-    void setUserData(UserModel* currentUser);
+    void setUserData(UserModel *currentUser);
 
 signals:
     void requestWorkoutTab(); // Sygnał do zmiany zakładki w MainWindow
@@ -28,11 +31,11 @@ private slots:
 
 private:
     Ui::DashboardView *ui;
-    UserModel* currentUser = nullptr;
+    UserModel *currentUser = nullptr;
 
     void loadExerciseList();
-    void updateCalendarMarks();      // Kolorowanie dni w kalendarzu
-    void updateLastWorkoutLink();    // Info o ostatnim treningu
+    void updateCalendarMarks();   // Kolorowanie dni w kalendarzu
+    void updateLastWorkoutLink(); // Info o ostatnim treningu
 
     QChartView *chartView;
     QChart *chart;

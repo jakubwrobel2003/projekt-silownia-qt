@@ -1,12 +1,12 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "LoginView.h"  // Dodanie LoginView
-#include "DashboardView.h"
-#include "WorkoutsView.h"
-#include "HistoryView.h"
-#include "ProfileView.h"
-#include "trainingview.h"
 #include <QApplication>
+#include "DashboardView.h"
+#include "HistoryView.h"
+#include "LoginView.h" // Dodanie LoginView
+#include "ProfileView.h"
+#include "WorkoutsView.h"
+#include "trainingview.h"
+#include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     , historyView(nullptr)
     , profileView(nullptr)
     , loginView(nullptr)
-    , trainingView(nullptr)// Dodanie loginView
+    , trainingView(nullptr) // Dodanie loginView
 {
     ui->setupUi(this);
 
@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Na początku pokazujemy okno logowania
     ui->stackedWidget->setCurrentIndex(0); // Ustawienie LoginView jako pierwszy widok
-
 }
 
 MainWindow::~MainWindow()
@@ -40,7 +39,7 @@ void MainWindow::setupViews()
 {
     // Usuwamy placeholderowe strony z .ui
     while (ui->stackedWidget->count() > 0) {
-        QWidget* w = ui->stackedWidget->widget(0);
+        QWidget *w = ui->stackedWidget->widget(0);
         ui->stackedWidget->removeWidget(w);
         w->deleteLater();
     }
@@ -48,11 +47,11 @@ void MainWindow::setupViews()
     // Dodajemy loginView, dashboardView itd.
     loginView = new LoginView(this);
     dashboardView = new DashboardView(this);
-    workoutsView  = new WorkoutsView(this);
-    historyView   = new HistoryView(this);
-    profileView   = new ProfileView(this);
+    workoutsView = new WorkoutsView(this);
+    historyView = new HistoryView(this);
+    profileView = new ProfileView(this);
     trainingView = new trainingview(this);
-    ui->stackedWidget->addWidget(loginView);  // Okno logowania jest pierwszym widgetem
+    ui->stackedWidget->addWidget(loginView); // Okno logowania jest pierwszym widgetem
     ui->stackedWidget->addWidget(dashboardView);
     ui->stackedWidget->addWidget(workoutsView);
     ui->stackedWidget->addWidget(historyView);
@@ -61,7 +60,8 @@ void MainWindow::setupViews()
 }
 
 void MainWindow::connectUi()
-{   connect(loginView, &LoginView::loginSuccessful, this, &MainWindow::onLoginSuccessful);
+{
+    connect(loginView, &LoginView::loginSuccessful, this, &MainWindow::onLoginSuccessful);
 
     connect(ui->btnDashboard, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentWidget(dashboardView);
@@ -79,9 +79,7 @@ void MainWindow::connectUi()
         ui->stackedWidget->setCurrentWidget(profileView);
     });
 
-    connect(ui->btnExit, &QPushButton::clicked, this, []() {
-        QApplication::quit();
-    });
+    connect(ui->btnExit, &QPushButton::clicked, this, []() { QApplication::quit(); });
     connect(dashboardView, &DashboardView::requestWorkoutTab, this, [this]() {
         ui->stackedWidget->setCurrentWidget(trainingView);
         // Opcjonalnie: trainingView->refreshData();
@@ -118,9 +116,9 @@ void MainWindow::unlockButtons()
     ui->btnTraining->setEnabled(true);
 }
 
-void MainWindow::onLoginSuccessful(UserModel* user)
+void MainWindow::onLoginSuccessful(UserModel *user)
 {
-    currentUser = user;  // Store the logged-in user object
+    currentUser = user; // Store the logged-in user object
 
     // Display user info (optional)
     qDebug() << "Logged in as: " << currentUser->getLogin();

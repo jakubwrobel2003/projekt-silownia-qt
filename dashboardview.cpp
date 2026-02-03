@@ -1,10 +1,10 @@
 #include "dashboardview.h"
-#include "ui_dashboardview.h"
-#include "./Database/databasemanager.h"
-#include <QSqlQuery>
-#include <QSqlError>
 #include <QDateTime>
+#include <QSqlError>
+#include <QSqlQuery>
 #include <QTextCharFormat>
+#include "./Database/databasemanager.h"
+#include "ui_dashboardview.h"
 
 DashboardView::DashboardView(QWidget *parent)
     : QWidget(parent)
@@ -20,7 +20,7 @@ DashboardView::DashboardView(QWidget *parent)
 
     // Połączenia sygnałów
     connect(ui->btnRefreshAnalysis, &QPushButton::clicked, this, &DashboardView::updateAnalysis);
-    connect(ui->btnStartWorkout, &QPushButton::clicked, this, [this](){
+    connect(ui->btnStartWorkout, &QPushButton::clicked, this, [this]() {
         emit requestWorkoutTab();
     });
 
@@ -52,11 +52,13 @@ DashboardView::DashboardView(QWidget *parent)
     series->attachAxis(axisY);
 }
 
-DashboardView::~DashboardView() {
+DashboardView::~DashboardView()
+{
     delete ui;
 }
 
-void DashboardView::setUserData(UserModel* currentUser) {
+void DashboardView::setUserData(UserModel *currentUser)
+{
     this->currentUser = currentUser;
     if (currentUser) {
         ui->lblWelcome->setText(QString("Witaj, %1!").arg(currentUser->getLogin()));
@@ -66,8 +68,10 @@ void DashboardView::setUserData(UserModel* currentUser) {
     }
 }
 
-void DashboardView::updateCalendarMarks() {
-    if (!currentUser) return;
+void DashboardView::updateCalendarMarks()
+{
+    if (!currentUser)
+        return;
 
     QSqlQuery q(DatabaseManager::instance().database());
     q.prepare("SELECT DISTINCT date FROM workout_sessions WHERE user_id = :uid");
@@ -91,16 +95,20 @@ void DashboardView::updateCalendarMarks() {
     }
 }
 
-void DashboardView::loadExerciseList() {
+void DashboardView::loadExerciseList()
+{
     ui->comboExercises->clear();
-    QSqlQuery q("SELECT name FROM exercise_definitions ORDER BY name", DatabaseManager::instance().database());
+    QSqlQuery q("SELECT name FROM exercise_definitions ORDER BY name",
+                DatabaseManager::instance().database());
     while (q.next()) {
         ui->comboExercises->addItem(q.value(0).toString());
     }
 }
 
-void DashboardView::updateAnalysis() {
-    if (!currentUser) return;
+void DashboardView::updateAnalysis()
+{
+    if (!currentUser)
+        return;
 
     // 1. Reset danych i interfejsu
     series->clear();
@@ -154,9 +162,12 @@ void DashboardView::updateAnalysis() {
             ui->tableHistory->setItem(row, 2, new QTableWidgetItem(QString::number(reps)));
 
             // Obliczanie ekstremów dla osi
-            if (!minDate.isValid() || dt < minDate) minDate = dt;
-            if (!maxDate.isValid() || dt > maxDate) maxDate = dt;
-            if (weight > maxWeight) maxWeight = weight;
+            if (!minDate.isValid() || dt < minDate)
+                minDate = dt;
+            if (!maxDate.isValid() || dt > maxDate)
+                maxDate = dt;
+            if (weight > maxWeight)
+                maxWeight = weight;
         }
 
         // 3. Dynamiczne ustawianie osi (Naprawa "pustego" wykresu)
@@ -173,15 +184,18 @@ void DashboardView::updateAnalysis() {
             chart->update();
             chartView->repaint();
         } else {
-            qDebug() << "Baza zwróciła 0 wyników dla:" << exerciseName << "w zakresie" << start << "-" << end;
+            qDebug() << "Baza zwróciła 0 wyników dla:" << exerciseName << "w zakresie" << start
+                     << "-" << end;
         }
     } else {
         qDebug() << "Błąd SQL w updateAnalysis:" << q.lastError().text();
     }
 }
-void DashboardView::updateLastWorkoutLink() {
+void DashboardView::updateLastWorkoutLink()
+{
     qDebug() << "Przycisk Odśwież został kliknięty!";
-    if (!currentUser) return;
+    if (!currentUser)
+        return;
     QSqlQuery q(DatabaseManager::instance().database());
     q.prepare("SELECT ws.date, w.name FROM workout_sessions ws "
               "JOIN workouts w ON ws.workout_id = w.id "
@@ -199,6 +213,4 @@ void DashboardView::on_btnRefreshAnalysis_clicked()
 {
     updateAnalysis();
     updateLastWorkoutLink();
-
 }
-

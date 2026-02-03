@@ -10,11 +10,12 @@ class HistoryView;
 class HistoryView : public QWidget
 {
     Q_OBJECT
-    UserModel* currentUser;
+    UserModel *currentUser;
+
 public:
     explicit HistoryView(QWidget *parent = nullptr);
     ~HistoryView();
-    void setUserData(UserModel* currentUser);
+    void setUserData(UserModel *currentUser);
 
 private:
     Ui::HistoryView *ui;

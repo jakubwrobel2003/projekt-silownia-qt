@@ -1,11 +1,11 @@
 #ifndef TRAININGVIEW_H
 #define TRAININGVIEW_H
 
-#include <QWidget>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QLineEdit>
 #include <QLabel>
+#include <QLineEdit>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QWidget>
 #include "./Model/usermodel.h"
 
 namespace Ui {
@@ -13,10 +13,11 @@ class trainingview;
 }
 
 // Struktura do łatwego odczytu danych z formularza
-struct ExerciseInputGroup {
+struct ExerciseInputGroup
+{
     int exerciseId;
-    QLineEdit* weightInput;
-    QLineEdit* repsInput;
+    QLineEdit *weightInput;
+    QLineEdit *repsInput;
 };
 
 class trainingview : public QWidget
@@ -27,7 +28,7 @@ public:
     explicit trainingview(QWidget *parent = nullptr);
     ~trainingview();
 
-    void setUserData(UserModel* user);
+    void setUserData(UserModel *user);
     void refreshWorkoutList();
 
 private slots:
@@ -36,7 +37,7 @@ private slots:
 
 private:
     Ui::trainingview *ui;
-    UserModel* currentUser = nullptr;
+    UserModel *currentUser = nullptr;
     QList<ExerciseInputGroup> activeInputs;
     int selectedWorkoutId = -1;
 

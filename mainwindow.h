@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "./Model/usermodel.h"
 #include <QMainWindow>
+#include "./Model/usermodel.h"
 
 // forward declarations
 class DashboardView;
@@ -28,19 +28,19 @@ private:
     Ui::MainWindow *ui;
 
     // widoki
-    DashboardView* dashboardView;
-    WorkoutsView*  workoutsView;
-    HistoryView*   historyView;
-    ProfileView*   profileView;
-    LoginView*     loginView;
-    trainingview* trainingView;
-    bool isLog=false;
+    DashboardView *dashboardView;
+    WorkoutsView *workoutsView;
+    HistoryView *historyView;
+    ProfileView *profileView;
+    LoginView *loginView;
+    trainingview *trainingView;
+    bool isLog = false;
     void setupViews();
     void connectUi();
-    void onLoginSuccessful(UserModel* user);
+    void onLoginSuccessful(UserModel *user);
     void lockButtons();
     void unlockButtons();
-    UserModel* currentUser=nullptr;
+    UserModel *currentUser = nullptr; //asdasd
 };
 
 #endif // MAINWINDOW_H

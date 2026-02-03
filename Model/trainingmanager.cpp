@@ -116,3 +116,51 @@ bool TrainingManager::saveWorkoutWithPlan(
     qDebug() << "Workout + plan saved successfully";
     return true;
 }
+
+// ===============================
+// POBIERANIE NAZWY PO ID
+// ===============================
+QString TrainingManager::getExerciseNameById(int id)
+{
+    QSqlQuery q(db.database());
+    q.prepare("SELECT name FROM exercise_definitions WHERE id = :id");
+    q.bindValue(":id", id);
+
+    if (q.exec() && q.next()) {
+        return q.value(0).toString();
+    }
+    return "Nieznane";
+}
+
+// [NOWE] Implementacja pobierania szczegółów
+QList<TrainingPlanDetail> TrainingManager::getWorkoutDetails(int workoutId)
+{
+    QList<TrainingPlanDetail> result;
+    QSqlQuery q(db.database());
+
+    // Pobieramy nazwę ORAZ cele (sets, reps, weight...)
+    q.prepare("SELECT ed.id, ed.name, p.type, p.sets, p.reps, p.weight, p.duration, p.distance "
+              "FROM workout_exercise_plan p "
+              "JOIN exercise_definitions ed ON p.exercise_def_id = ed.id "
+              "WHERE p.workout_id = :wid");
+    q.bindValue(":wid", workoutId);
+
+    if (q.exec()) {
+        while (q.next()) {
+            TrainingPlanDetail item;
+            item.exerciseDefId = q.value(0).toInt();
+            item.exerciseName = q.value(1).toString();
+            item.type = q.value(2).toString();
+            item.targetSets = q.value(3).toInt();
+            item.targetReps = q.value(4).toInt();
+            item.targetWeight = q.value(5).toDouble();
+            item.targetDuration = q.value(6).toInt();
+            item.targetDistance = q.value(7).toDouble();
+
+            result.append(item);
+        }
+    } else {
+        qWarning() << "Error getting workout details:" << q.lastError().text();
+    }
+    return result;
+}

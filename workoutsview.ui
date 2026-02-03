@@ -6,142 +6,265 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
-    <height>398</height>
+    <width>1100</width>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Kreator Treningu</string>
   </property>
-  <widget class="QWidget" name="horizontalLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>-1</x>
-     <y>-1</y>
-     <width>621</width>
-     <height>381</height>
-    </rect>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="spacing">
+    <number>20</number>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QWidget" name="widget" native="true">
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <widget class="QWidget" name="verticalLayoutWidget_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>161</width>
-         <height>251</height>
-        </rect>
+   <property name="leftMargin">
+    <number>30</number>
+   </property>
+   <property name="topMargin">
+    <number>30</number>
+   </property>
+   <property name="rightMargin">
+    <number>30</number>
+   </property>
+   <property name="bottomMargin">
+    <number>30</number>
+   </property>
+   <item>
+    <layout class="QHBoxLayout" name="contentLayout">
+     <property name="spacing">
+      <number>30</number>
+     </property>
+     <item>
+      <widget class="QGroupBox" name="groupCreator">
+       <property name="minimumSize">
+        <size>
+         <width>350</width>
+         <height>0</height>
+        </size>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Ćwiczenia w treningu</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QListWidget" name="addedExercisesList"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Nazwa treningu</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="workoutNameLineEdit"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="saveWorkoutButton">
-          <property name="text">
-           <string>Zapisz trening</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QWidget" name="widget_2" native="true">
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>168</width>
-         <height>340</height>
-        </rect>
+       <property name="maximumSize">
+        <size>
+         <width>400</width>
+         <height>16777215</height>
+        </size>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="title">
+        <string>Kreator Treningu</string>
+       </property>
+       <layout class="QVBoxLayout" name="creatorLayout">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
         <item>
-         <widget class="QComboBox" name="exerciseTypeComboBox"/>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="distanceSpinBox"/>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="durationSpinBox"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_6">
+         <widget class="QLabel" name="labelName">
           <property name="text">
-           <string>Ćwiczenie</string>
+           <string>Nazwa treningu:</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="workoutNameLineEdit">
+          <property name="placeholderText">
+           <string>np. Poniedziałek - Klatka</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelType">
+          <property name="text">
+           <string>Typ i Ćwiczenie:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="typeSelectLayout">
+          <item>
+           <widget class="QComboBox" name="exerciseTypeComboBox"/>
+          </item>
+         </layout>
         </item>
         <item>
          <widget class="QComboBox" name="exerciseComboBox"/>
         </item>
         <item>
-         <widget class="QLabel" name="label_5">
+         <layout class="QHBoxLayout" name="videoLayout">
+          <item>
+           <widget class="QPushButton" name="btnShowVideo">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: #D32F2F; color: white; font-weight: bold; border-radius: 4px; padding: 5px;</string>
+            </property>
+            <property name="text">
+             <string>🎥 Pokaż instrukcję wybranego ćwiczenia</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_video">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblVideoLink">
+          <property name="styleSheet">
+           <string notr="true">color: #4FC3F7; font-weight: bold; margin-bottom: 5px;</string>
+          </property>
           <property name="text">
-           <string>Serie</string>
+           <string/>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="setsSpinBox"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Powtórzenia</string>
+         <widget class="Line" name="line1">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="repsSpinBox"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Ciężar (kg)</string>
-          </property>
+         <widget class="QWidget" name="strengthParamsWidget" native="true">
+          <layout class="QGridLayout" name="gridStrength">
+           <property name="margin" stdset="0">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="lSets">
+             <property name="text">
+              <string>Serie:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="setsSpinBox"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="lReps">
+             <property name="text">
+              <string>Powt.:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QSpinBox" name="repsSpinBox"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lWeight">
+             <property name="text">
+              <string>Ciężar:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1" colspan="3">
+            <widget class="QDoubleSpinBox" name="weightSpinBox"/>
+           </item>
+          </layout>
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="weightSpinBox"/>
+         <widget class="QWidget" name="cardioParamsWidget" native="true">
+          <layout class="QGridLayout" name="gridCardio">
+           <property name="margin" stdset="0">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="lDur">
+             <property name="text">
+              <string>Czas (min):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="durationSpinBox"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lDist">
+             <property name="text">
+              <string>Dyst. (km):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QDoubleSpinBox" name="distanceSpinBox"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacerCreator">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <widget class="QPushButton" name="addExerciseButton">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>45</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: #4CAF50; color: white; font-weight: bold;</string>
+          </property>
           <property name="text">
-           <string>Dodaj ćwiczenie</string>
+           <string>DODAJ ĆWICZENIE</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="generateAiWorkoutButton">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: #5C6BC0; color: white;</string>
+          </property>
           <property name="text">
            <string>Generuj trening AI</string>
           </property>
@@ -149,10 +272,95 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="rightLayout">
+       <item>
+        <widget class="QLabel" name="labelTable">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Plan Treningowy:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTableWidget" name="exercisesTable">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <property name="columnCount">
+          <number>6</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>Ćwiczenie</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Typ</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Serie / Czas</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Powt. / Dyst.</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Ciężar</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Akcja</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="saveWorkoutButton">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #2E7D32; color: white; border-radius: 5px;</string>
+     </property>
+     <property name="text">
+      <string>ZAPISZ PLAN TRENINGOWY</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

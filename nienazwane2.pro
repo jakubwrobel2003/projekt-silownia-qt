@@ -30,6 +30,7 @@ SOURCES += \
     Repository/workoutsessionrepository.cpp \
     Utils/passwordhasher.cpp \
     dashboardview.cpp \
+    helpview.cpp \
     historyview.cpp \
     loginview.cpp \
     main.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
     Repository/workoutsessionrepository.h \
     Utils/passwordhasher.h \
     dashboardview.h \
+    helpview.h \
     historyview.h \
     loginview.h \
     mainwindow.h \
@@ -71,6 +73,7 @@ HEADERS += \
 
 FORMS += \
     dashboardview.ui \
+    helpview.ui \
     historyview.ui \
     loginview.ui \
     mainwindow.ui \
@@ -82,3 +85,7 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    logo.qrc \
+    resource.qrc

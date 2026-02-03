@@ -144,6 +144,18 @@ void DatabaseManager::initDatabase()
         "FOREIGN KEY(exercise_def_id) REFERENCES exercise_definitions(id))"
         );
 
+    // ===== USER MEASUREMENTS (HISTORIA WAGI I WZROSTU) =====
+    q.exec(
+        "CREATE TABLE IF NOT EXISTS user_measurements ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        "user_id INTEGER NOT NULL,"
+        "weight REAL NOT NULL,"
+        "height INTEGER NOT NULL,"
+        "bmi REAL,"
+        "date TEXT NOT NULL,"
+        "FOREIGN KEY(user_id) REFERENCES users(id))"
+        );
+
     // ===== DANE STARTOWE =====
     QSqlQuery check;
     check.exec("SELECT COUNT(*) FROM exercise_definitions");

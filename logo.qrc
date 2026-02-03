@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>logo/MacroMind logo with brain and barbell.png</file>
+    </qresource>
+</RCC>

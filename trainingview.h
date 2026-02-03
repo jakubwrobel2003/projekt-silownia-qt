@@ -1,24 +1,14 @@
 #ifndef TRAININGVIEW_H
 #define TRAININGVIEW_H
 
-#include <QLabel>
-#include <QLineEdit>
-#include <QSqlError>
-#include <QSqlQuery>
 #include <QWidget>
+#include <QListWidgetItem>
 #include "./Model/usermodel.h"
+#include "./Model/trainingmanager.h"
 
 namespace Ui {
 class trainingview;
 }
-
-// Struktura do łatwego odczytu danych z formularza
-struct ExerciseInputGroup
-{
-    int exerciseId;
-    QLineEdit *weightInput;
-    QLineEdit *repsInput;
-};
 
 class trainingview : public QWidget
 {
@@ -32,16 +22,15 @@ public:
     void refreshWorkoutList();
 
 private slots:
-    void on_listWorkouts_itemClicked(); // Wybór treningu z listy
-    void on_btnSaveWorkout_clicked();   // Zapis do bazy
+    void on_listWorkouts_itemClicked();
+    void on_btnSaveWorkout_clicked(); // Slot zapisu
 
 private:
     Ui::trainingview *ui;
     UserModel *currentUser = nullptr;
-    QList<ExerciseInputGroup> activeInputs;
-    int selectedWorkoutId = -1;
+    TrainingManager *trainingManager;
 
-    void clearForm();
+    int selectedWorkoutId = -1;
 };
 
 #endif // TRAININGVIEW_H

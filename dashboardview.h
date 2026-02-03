@@ -1,13 +1,14 @@
 #ifndef DASHBOARDVIEW_H
 #define DASHBOARDVIEW_H
 
-#include <QChartView>
-#include <QDate>
-#include <QLineSeries>
 #include <QWidget>
 #include <QtCharts>
+#include <QChartView>
+#include <QLineSeries>
+#include <QDateTimeAxis>
+#include <QValueAxis>
 #include "./Model/usermodel.h"
-void setupChart();
+
 namespace Ui {
 class DashboardView;
 }
@@ -21,12 +22,8 @@ public:
     ~DashboardView();
     void setUserData(UserModel *currentUser);
 
-signals:
-    void requestWorkoutTab(); // Sygnał do zmiany zakładki w MainWindow
-
 private slots:
-    void updateAnalysis(); // Slot dla przycisku odświeżania tabeli
-
+    void updateAnalysis(); // Slot odświeżania wykresu
     void on_btnRefreshAnalysis_clicked();
 
 private:
@@ -34,15 +31,17 @@ private:
     UserModel *currentUser = nullptr;
 
     void loadExerciseList();
-    void updateCalendarMarks();   // Kolorowanie dni w kalendarzu
-    void updateLastWorkoutLink(); // Info o ostatnim treningu
+    void updateCalendarMarks(); // Kolorowanie dni treningowych
+    void updateMonthlyStats();  // Nowa funkcja do licznika
 
+    // Komponenty wykresu
     QChartView *chartView;
     QChart *chart;
     QLineSeries *series;
     QDateTimeAxis *axisX;
     QValueAxis *axisY;
-    void setupChart();
+
+    void setupChart(); // Konfiguracja wyglądu wykresu
 };
 
-#endif
+#endif // DASHBOARDVIEW_H

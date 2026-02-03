@@ -3,25 +3,30 @@
 
 #include <QStringList>
 #include <QList>
-
 #include "./Database/DatabaseManager.h"
 
-// ===============================
-// STRUKTURA PLANU TRENINGU
-// ===============================
+// ... (Twoja struktura WorkoutExercisePlan zostaje bez zmian) ...
 struct WorkoutExercisePlan
 {
-    int exerciseDefId;     // id z exercise_definitions
-    QString type;          // "strength" / "cardio"
-
-    // strength
+    int exerciseDefId;
+    QString type;
     int sets = 0;
     int reps = 0;
     double weight = 0.0;
-
-    // cardio
     int duration = 0;
     double distance = 0.0;
+};
+
+// [NOWE] Struktura do wyświetlania w TrainingView (Plan + Nazwa)
+struct TrainingPlanDetail {
+    int exerciseDefId;
+    QString exerciseName;
+    QString type;
+    int targetSets;
+    int targetReps;
+    double targetWeight;
+    int targetDuration;
+    double targetDistance;
 };
 
 class TrainingManager
@@ -29,15 +34,14 @@ class TrainingManager
 public:
     explicit TrainingManager(DatabaseManager& db);
 
-    // ===== LISTA ĆWICZEŃ =====
+    // ... (Twoje stare metody zostają) ...
     QStringList getExerciseNamesByType(const QString& type);
     int getExerciseDefinitionId(const QString& name);
+    bool saveWorkoutWithPlan(const QString& workoutName, const QList<WorkoutExercisePlan>& plan);
+    QString getExerciseNameById(int id);
 
-    // ===== ZAPIS TRENINGU =====
-    bool saveWorkoutWithPlan(
-        const QString& workoutName,
-        const QList<WorkoutExercisePlan>& plan
-        );
+    // [NOWE] Pobieranie szczegółów planu do wykonania
+    QList<TrainingPlanDetail> getWorkoutDetails(int workoutId);
 
 private:
     DatabaseManager& db;

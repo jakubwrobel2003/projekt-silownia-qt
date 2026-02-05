@@ -20,14 +20,7 @@ SOURCES += \
     Model/usermodel.cpp \
     Model/workout.cpp \
     Model/workoutsession.cpp \
-    Repository/exercisedefinitionrepository.cpp \
-    Repository/exercisehistoryrepository.cpp \
-    Repository/exerciserepository.cpp \
-    Repository/exerciseresultrepository.cpp \
-    Repository/historyrepository.cpp \
     Repository/userrepository.cpp \
-    Repository/workoutrepository.cpp \
-    Repository/workoutsessionrepository.cpp \
     Utils/passwordhasher.cpp \
     dashboardview.cpp \
     helpview.cpp \
@@ -53,14 +46,7 @@ HEADERS += \
     Model/usermodel.h \
     Model/workout.h \
     Model/workoutsession.h \
-    Repository/exercisedefinitionrepository.h \
-    Repository/exercisehistoryrepository.h \
-    Repository/exerciserepository.h \
-    Repository/exerciseresultrepository.h \
-    Repository/historyrepository.h \
     Repository/userrepository.h \
-    Repository/workoutrepository.h \
-    Repository/workoutsessionrepository.h \
     Utils/passwordhasher.h \
     dashboardview.h \
     helpview.h \
